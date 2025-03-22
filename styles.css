@@ -1,0 +1,54 @@
+* {
+   margin: 0;
+   padding: 0;
+   font-family: Arial;
+}
+
+.task-name, .deadline-input {
+   padding: 10px;
+}
+
+.task-container {
+   justify-content: center;
+}
+
+.task-btn {
+   color: whitesmoke;
+   cursor: pointer;
+   border: none;
+   font-size: 15px;
+   padding: 10px 15px;
+}
+
+.todo-row {
+   display: grid;
+   grid-template-columns: 200px 150px 100px;
+   align-items: center;
+   column-gap: 10px;
+   margin-top: 10px;
+}
+
+.todo-name, .todo-date{
+   font-size: 12pt;
+}
+
+.add-button {
+   background-color: green;
+}
+
+.delete-button {
+   background-color: rgb(134, 15, 15);
+}
+
+.status-message {
+   margin: 10px;
+}
+
+.error-message {
+   color: darkred;
+}
+
+.success-message {
+   color: rgb(20, 156, 20);
+}
+
