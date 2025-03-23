@@ -1,4 +1,7 @@
-let taskArr = [];
+let taskArr = loadTasks();
+
+displayTasks();
+
 function addTask() {
    const taskName = document.getElementById('task-input');
    const taskDeadline = document.getElementById('deadline');
@@ -16,9 +19,10 @@ function addTask() {
 
    // add the task row to the dom
 
-   displayTask(taskId, taskName.value, taskDeadline.value);
+   displayTasks();
    displayStatusMessage('success', 'Successfuly added task!')
    clearInputs();
+   saveTasks();
 }
 
 
@@ -43,22 +47,47 @@ function deleteTask(taskId) {
       }
    }
    console.log(taskArr.length);
+   saveTasks();
 }
 
-function displayTask(id, name, deadline) {
+function displayTasks() {
    // retrives the container where the task rows will be placed
    const taskContainer = document.querySelector('.tasks');
+
+   let todoListHTML = '';
+
+   for (let i = 0; i < taskArr.length; i++) {
+      const id = taskArr[i].id;
+      const name = taskArr[i].name;
+      const deadline = taskArr[i].deadline;
+
+      todoListHTML += 
+      `
+      <div class="todo-row task${id}">
+      <div class="todo-name">${name}</div>
+      <div class="todo-date">${deadline}</div>
+      <button id="task${id}" 
+         class="task-btn delete-button" 
+         onclick="deleteTask(this.id)"
+      >
+         Delete
+      </button>
+      `
+   }
+
+   taskContainer.innerHTML = todoListHTML;
+
    // add a task row
-   taskContainer.innerHTML += `
-   <div class="todo-row task${id}">
-   <div class="todo-name">${name}</div>
-   <div class="todo-date">${deadline}</div>
-   <button id="task${id}" 
-      class="task-btn delete-button" 
-      onclick="deleteTask(this.id)"
-   >
-      Delete
-   </button>`
+   // taskContainer.innerHTML += `
+   // <div class="todo-row task${id}">
+   // <div class="todo-name">${name}</div>
+   // <div class="todo-date">${deadline}</div>
+   // <button id="task${id}" 
+   //    class="task-btn delete-button" 
+   //    onclick="deleteTask(this.id)"
+   // >
+   //    Delete
+   // </button>`
 }
 
 function displayStatusMessage(status, message) {
@@ -92,5 +121,19 @@ function clearInputs() {
 
    taskName.value = '';
    taskDeadline.value = null;
+}
+
+function saveTasks() {
+   const tasksStringified = JSON.stringify(taskArr);
+   localStorage.setItem('savedTasks', tasksStringified) 
+}
+
+function loadTasks() {
+   const getTasks = localStorage.getItem('savedTasks');
+   const retrievedTasks = JSON.parse(getTasks);
+
+   let tasksArr = retrievedTasks || [];
+
+   return tasksArr;
 }
 
