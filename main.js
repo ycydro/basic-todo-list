@@ -72,6 +72,7 @@ function displayTasks() {
       >
          Delete
       </button>
+      </div>
       `
    }
 
